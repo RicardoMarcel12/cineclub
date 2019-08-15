@@ -5,10 +5,8 @@
  */
 package com.cineclub.rental.repository;
 
-import com.cineclub.rental.model.AppUser;
-import java.util.Optional;
+import com.cineclub.rental.model.MrMovie;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author keiichi
  */
 @Repository
-public interface AppUserRepository extends JpaRepository<AppUser, Long>{
+public interface MrMovieRepository extends JpaRepository<MrMovie, Long> {
     
-    Optional<AppUser> findByUsername(@Param("username")String username);
 }

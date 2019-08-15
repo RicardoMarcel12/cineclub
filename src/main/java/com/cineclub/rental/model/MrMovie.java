@@ -7,16 +7,12 @@ package com.cineclub.rental.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import static java.util.stream.Collectors.toList;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,61 +28,57 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  *
- * @author keiichi
+ * @author keiic
  */
 @Entity
 @Getter
 @Setter
+@Table(name = "MR_MOVIE")
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "APP_USER")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"CreatedAt","UpdatedAt"}, allowGetters = true)
-public class AppUser implements UserDetails {
+@JsonIgnoreProperties(value = {"createdAt","updatedAt"}, allowGetters = true)    
+public class MrMovie implements Serializable {
     
     @Id
-     @Column(name = "USER_ID", nullable = false)
+    @Column(name = "MOVIE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView
-    private Long userId;
+    private Long movieId;
+    
+     //title, description, at least one image, stock, rental price, sale price and availability.
     
     @NotBlank
     @JsonView
-    private String username;
+    private String title;
     
     @NotBlank
     @JsonView
-    private String password;
-    
+    private String description;
+      
     @NotBlank
     @JsonView
-    private String firstName;
+    private String imageUrl;  
+    
     
     @JsonView
-    private String secondName;
+    Integer stock;
     
-    @NotBlank
-    @JsonView
-    private String firstSurname;
     
     @JsonView
-    private String secondSurname;
+    BigDecimal rentalPrice;
     
-    @NotBlank
+    
     @JsonView
-    private String email;
+    BigDecimal salePrice;
     
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    
+    @JsonView
+    Boolean isAvailable;
     
     @Column(nullable=false, updatable=false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -98,29 +89,4 @@ public class AppUser implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(toList());
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-         return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-         return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-         return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-         return true;
-    }
 }
