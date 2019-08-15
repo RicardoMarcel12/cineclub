@@ -3,6 +3,15 @@ test for applaudo studios
 
 version: 0.1
 
+the database used is MySQL just create a schema and a user with the name 'cineclub' and register the credentials to 
+the file in \src\main\resources\application.properties and then with a mvn build the structure will be created by jpa into the schema
+
+required mysql setup on application.properties example:
+spring.datasource.url = jdbc:mysql://127.0.0.1:3306/cineclub?serverTimezone=UTC&useSSL=false
+spring.datasource.username = cineclub
+spring.datasource.password = zWJt2GEYxt7C
+
+
 first do a mvn build 
 for running use the command mvn spring-boot:run and take note of the password generated 
 
