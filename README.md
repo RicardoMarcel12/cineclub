@@ -37,11 +37,56 @@ use the Generated token with Authentication type **"Bearer Token"**
 ## movie management:
 
 ### GET MOVIE LIST
+	Get a list of available movies, no authentication required
 
 | PROP      | VALUE        |
 |-----------	|--------------|
 | URL:      | /m1/movies   |
 | METHOD:   | GET          |
+
+#### FILTERS, SORT AND PAGE PARAMS
+all parameters are optional
+
+| PARAMETER | VALUE EXAMPLE   |           DESCRIPTION			                  |
+|-----------	|-----------------|---------------------------------------------------|
+| title=    | 'matrix'	      | matches any part of the movie title               | 
+| page=  	| 0               | page number starting with zero                    |
+| size=		| 5               | number of elements on page         	              |
+| sort=     | movieId, -title | any field of the movie, dash for descending order |	
+
+all posible sort fields are:
+- title
+- description
+- stock
+- rentalPrice
+- salePrice	
+	
+### GET ADMINISTRATOR MOVIE LIST	
+Get a list of all movies, admin role required
+
+| PROP      | VALUE              |
+|-----------	|--------------------|
+| URL:      | /m1/movies/admin   |
+| METHOD:   | GET                |
+
+#### FILTERS, SORT AND PAGE PARAMS
+all parameters are optional
+
+| PARAMETER  | VALUE EXAMPLE   |           DESCRIPTION			                  |
+|------------|-----------------|---------------------------------------------------|
+| title=     | 'matrix'	       | matches any part of the movie title               | 
+| isAvailable| true, false     | filters available/unavailable movies              |
+| page=  	 | 0               | page number starting with zero                    |
+| size=		 | 5               | number of elements on page         	               |
+| sort=      | movieId, -title | any field of the movie, dash for descending order |	
+
+all posible sort fields are:
+- title
+- description
+- stock
+- rentalPrice
+- salePrice
+			
 	
 ### INSERT MOVIE
 
@@ -52,7 +97,7 @@ use the Generated token with Authentication type **"Bearer Token"**
 | HEADER:   | Content-Type:application/json           |
 | BODY:	    | `{"movieId": 0,"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true	}` |
 		
-		
+
 ### VIEW MOVIE
 
 | PROP      |    VALUE          |

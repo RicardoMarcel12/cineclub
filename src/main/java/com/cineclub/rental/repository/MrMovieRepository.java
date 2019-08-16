@@ -6,6 +6,9 @@
 package com.cineclub.rental.repository;
 
 import com.cineclub.rental.model.MrMovie;
+import org.hibernate.annotations.Parameter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +18,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MrMovieRepository extends JpaRepository<MrMovie, Long> {
+    
+    public Page<MrMovie> findByTitleContainingAndIsAvailable(String title,Boolean isAvailable,Pageable pageable);
+    
+    public Page<MrMovie> findByTitleContaining(String title,Pageable pageable);
     
 }
