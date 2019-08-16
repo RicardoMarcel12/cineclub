@@ -1,71 +1,61 @@
 # cineclub
 test for applaudo studios
 
-version: 0.2 
-
+##version: 0.2 
 Security Implemented
 
-the database used is MySQL just create a schema and a user with the name 'cineclub' and register the credentials to 
-the file in \src\main\resources\application.properties and then with a mvn build the structure will be created by jpa into the schema
+#Instal
+implemented with MySQL Database 8.0.17 (Community Version GPL) 
+create a schema and a user and register the credentials to file `\src\main\resources\application.properties`
+,jpa will generate the model
 
-required mysql setup on application.properties example:
+##application.properties example:
 spring.datasource.url = jdbc:mysql://127.0.0.1:3306/cineclub?serverTimezone=UTC&useSSL=false
 spring.datasource.username = cineclub
 spring.datasource.password = zWJt2GEYxt7C
 
-first do a mvn build 
-for running use the command mvn spring-boot:run and take note of the password generated 
+#Run 
+for running use the command `mvn spring-boot:run` 
 
-first you need to login to 
-	URL: localhost:8080/auth/login
-	METHOD: POST
-	HEADER: Content-Type:application/json
-	BODY: {"username":"admin", "password":"12345"}
+# Movie Rental Security
+API security implemented with JWT with an expiration time of 1 hour
 
-and then take the Generated token and save it to make operations to Movies
+##Login
+first you need to login to
+  
+|URL:	| /auth/login|
+|METHOD:	| POST|
+|HEADER:	| Content-Type:application/json|
+|BODY:	| {"username":"admin", "password":"12345"}|
 
-Available options for movie management:
+use the Generated token with Authentication type "Bearer Token"
 
-  GET MOVIE LIST
-	URL:localhost:8080/m1/movies
-	METHOD:GET
+#movie management:
+
+## GET MOVIE LIST
+|URL:	|/m1/movies|
+|METHOD:	|GET|
 	
-  INSERT MOVIE
-  	URL: localhost:8080/m1/movies/
-	METHOD: POST
-	HEADER: Content-Type:application/json
-	BODY:{
-		    "movieId": 0,
-		    "title": "Movie Title",
-		    "description": "brief Description",
-		    "imageUrl": "https://server/image.ext",
-		    "stock": 1, //integer
-		    "rentalPrice": 0.99, //BigDecimal
-		    "salePrice": 1.99,// BigDecimal
-		    "isAvailable": true //Boolean
-		}
+##INSERT MOVIE
+|URL:	|/m1/movies|
+|METHOD:	| POST|
+|HEADER:	| Content-Type:application/json|
+|BODY:	|{"movieId": 0,"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true	}|
 		
-   VIEW MOVIE
-   	 URL: localhost:8080/m1/movies/{id}
-	 METHOD: GET
+		
+##VIEW MOVIE
+|URL:	| /m1/movies/{id}|
+|METHOD:	| GET|
 	
-   UPDATE MOVIE
-   	 URL: localhost:8080/m1/movies/{id}
-	 METHOD: PUT
-	 HEADER: Content-Type:application/json
-	 BODY:{
-		    "title": "Movie Title",
-		    "description": "brief Description",
-		    "imageUrl": "https://server/image.ext",
-		    "stock": 1, //integer
-		    "rentalPrice": 0.99, //BigDecimal
-		    "salePrice": 1.99,// BigDecimal
-		    "isAvailable": true //Boolean
-		  } 
+##UPDATE MOVIE
+|URL:	| /m1/movies/{id}|
+|METHOD:	| PUT|
+|HEADER:	| Content-Type:application/json|
+|BODY:	|{"movieId": 0,"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true	}|
 
-   DELETE MOVIE
-	 URL: localhost:8080/m1/movies/{id}
-	 METHOD: DELETE
+##DELETE MOVIE
+|URL:	| /m1/movies/{id}|
+|METHOD:	| DELETE|
 	 	
 		
 		
