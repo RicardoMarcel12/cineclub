@@ -10,9 +10,9 @@ create a schema and a user and register the credentials to file `\src\main\resou
 ,jpa will generate the model
 
 ## application.properties example:
-spring.datasource.url = jdbc:mysql://127.0.0.1:3306/cineclub?serverTimezone=UTC&useSSL=false
-spring.datasource.username = cineclub
-spring.datasource.password = zWJt2GEYxt7C
+|spring.datasource.url = jdbc:mysql://127.0.0.1:3306/cineclub?serverTimezone=UTC&useSSL=false|
+|spring.datasource.username = cineclub|
+|spring.datasource.password = zWJt2GEYxt7C|
 
 # Run 
 for running use the command `mvn spring-boot:run` 
