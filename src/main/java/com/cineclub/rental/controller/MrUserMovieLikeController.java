@@ -55,19 +55,14 @@ public class MrUserMovieLikeController {
     @PostMapping("")
     public ResponseEntity toggleLike(@RequestBody MrUserMovieLikeDTO form, HttpServletRequest request){
         MrMovie movieId = mrMovieRepository.findById(form.getMovieId()).orElseThrow(()-> new ResourceNotFoundException("Like", "movieId",form.getMovieId()));
-        logger.info("entontre la pelicula: "+movieId.getTitle());
         AppUser userId = appUserRepository.findByUsername(form.getUsername()).orElseThrow(()-> new ResourceNotFoundException("Like", "username",form.getUsername()));
-        logger.info("entontre el usuario: "+form.getUsername()+" :id>  "+userId.getUserId());
         MrUserMovieLike like;
         try {
             like = mrUserMovieLikeRepository.findByMovieIdAndUserId(movieId, userId).orElseThrow(()-> new ResourceNotFoundException("Like", "existing Like",form.getUsername()+" "+movieId.getTitle()));
             //Toggle Like
-            logger.info("ENCONTRAMOS likes para esta movie ni este usuario");
             like.setIsLiked(!like.getIsLiked());
             mrUserMovieLikeRepository.saveAndFlush(like);
-            logger.info("GUARDAMOS EL like con id "+like.getLikeId()+" y esta "+ (like.getIsLiked()?"liked":"unliked"));
         } catch (Exception e) {
-            logger.info("no hay likes para esta movie ni este usuario");
             //es nuevo
             like = new MrUserMovieLike();
             like.setLikeId(0l);
@@ -76,7 +71,6 @@ public class MrUserMovieLikeController {
             like.setIsLiked(Boolean.TRUE);
 
             mrUserMovieLikeRepository.saveAndFlush(like);
-           
         }
         return ResponseEntity.noContent().build();
     }

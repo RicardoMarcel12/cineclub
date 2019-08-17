@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,26 +41,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Getter
 @Setter
-@Table(name = "MR_USER_MOVIE_LIKE")
+@Table(name = "MR_RENT_BUY_MOVIE")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class MrUserMovieLike implements Serializable {
+public class MrRentBuyMovie implements Serializable {
 
     @Id
-    @Column(name = "LIKE_ID", nullable = false)
+    @Column(name = "RENT_BUY_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView
-    private Long likeId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Getter(onMethod = @__(
-            @JsonIgnore))
-    @JoinColumns({
-        @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
-    AppUser userId;
+    private Long rentBuyId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @Getter(onMethod = @__(
@@ -68,8 +62,42 @@ public class MrUserMovieLike implements Serializable {
         @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")})
     MrMovie movieId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter(onMethod = @__(
+            @JsonIgnore))
+    @JoinColumns({
+        @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
+    AppUser userId;
+
+    /*true->rent - false->buy*/
     @NotNull
-    Boolean isLiked;
+    Boolean isRentBuy;
+
+    /*one by default*/
+    @NotNull
+    Integer days;
+
+    /*days after rent*/
+    @Column(nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    Date returnDate;
+
+    /*date of actual return*/
+    @Column(nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    Date returnedOn;
+
+    /*one by default*/
+    @JsonView
+    Integer copiesQty;
+
+    @JsonView
+    BigDecimal operationAmount;
+
+    /*true->active - false->inactive
+     purchases are inactive by default */
+    @NotNull
+    Boolean isActive;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

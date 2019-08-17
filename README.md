@@ -1,11 +1,12 @@
 # cineclub
 test for applaudo studios
 
-## version: 0.4 
+## version: 0.5 
 -0.1 Initialization of project
 -0.2 Security Implemented
 -0.3 Filtering, sorting and paging
 -0.4 Like system
+-0.5 Rent and Buy
 
 
 ## Install
@@ -38,7 +39,7 @@ first you need to login to
 
 use the Generated token with Authentication type **"Bearer Token"**
 
-## movie management:
+## Movie Management:
 
 ### GET MOVIE LIST
 	Get a list of available movies, no authentication required
@@ -142,3 +143,20 @@ all posible sort fields are:
 | METHOD:	| POST                                    |
 | HEADER:	| Content-Type:application/json           |
 | BODY:	    | {"movieId":"{id}","username":"{username}"}      |
+
+## Rental and Buying:
+
+### RENT A MOVIE
+
+### GET LIST OF ACTIVE RENTS
+
+### REQUEST MOVIE RETURN
+
+### CONFIRM PAYMENT AND MOVIE RETURN
+
+### REQUEST MOVIE BUY
+
+### CONFIRM MOVIE BUY
+ Still got to validate purchase timeout
+ 
+### GET HISTORY OF PURCHASES 

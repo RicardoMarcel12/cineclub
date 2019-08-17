@@ -41,55 +41,55 @@ public class MrMovieController {
     private MrMovieRepository mrMovieRepository;
 
     @GetMapping("")
-    public ResponseEntity showAllMovies(@RequestParam(value="title", required = false)String title,
-                                        @RequestParam(value="page", required = false)Integer page,
-                                        @RequestParam(value="size", required = false)Integer size,
-                                        @RequestParam(value="sort", required = false)String sort) {
-       
-        //Paging and Sorting
-        PageRequest pr=null;
-        
-        if(page!= null && size>0 && sort==null){
-             pr = PageRequest.of(page, size, Sort.by("title").ascending());
-        }else if (page!= null && size>0 && sort!= null){
-            if(sort.startsWith("-")){
-                pr = PageRequest.of(page, size, Sort.by(sort.substring(1)).descending());
-            }else{
-                pr = PageRequest.of(page, size, Sort.by(sort).ascending());
-            }
-        }else{
-             pr = PageRequest.of(0, 15, Sort.by("title").ascending());
-        }
-        //Determine parameter set
-            return ResponseEntity.ok(mrMovieRepository.findByTitleContainingAndIsAvailable(title==null?"":title,true,pr));
-    }
-    
-    @GetMapping("/admin")
-    public ResponseEntity showAllMoviesAdmin(@RequestParam(value="title", required = false)String title,
-                                             @RequestParam(value="isAvailable", required = false)Boolean isAvailable,
-                                             @RequestParam(value="page", required = false)Integer page,
-                                             @RequestParam(value="size", required = false)Integer size,
-                                             @RequestParam(value="sort", required = false)String sort) {
+    public ResponseEntity showAllMovies(@RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer size,
+            @RequestParam(value = "sort", required = false) String sort) {
 
         //Paging and Sorting
-        PageRequest pr=null;
-        
-        if(page!= null && size>0 && sort==null){
-             pr = PageRequest.of(page, size, Sort.by("title").ascending());
-        }else if (page!= null && size>0 && sort!= null){
-            if(sort.startsWith("-")){
+        PageRequest pr = null;
+
+        if (page != null && size > 0 && sort == null) {
+            pr = PageRequest.of(page, size, Sort.by("title").ascending());
+        } else if (page != null && size > 0 && sort != null) {
+            if (sort.startsWith("-")) {
                 pr = PageRequest.of(page, size, Sort.by(sort.substring(1)).descending());
-            }else{
+            } else {
                 pr = PageRequest.of(page, size, Sort.by(sort).ascending());
             }
-        }else{
-             pr = PageRequest.of(0, 15, Sort.by("title").ascending());
+        } else {
+            pr = PageRequest.of(0, 15, Sort.by("title").ascending());
         }
         //Determine parameter set
-        if (isAvailable!= null) {
-            return ResponseEntity.ok(mrMovieRepository.findByTitleContainingAndIsAvailable(title==null?"":title,isAvailable,pr));
-        }else{
-            return ResponseEntity.ok(mrMovieRepository.findByTitleContaining(title==null?"":title,pr));
+        return ResponseEntity.ok(mrMovieRepository.findByTitleContainingAndIsAvailable(title == null ? "" : title, true, pr));
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity showAllMoviesAdmin(@RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "isAvailable", required = false) Boolean isAvailable,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Integer size,
+            @RequestParam(value = "sort", required = false) String sort) {
+
+        //Paging and Sorting
+        PageRequest pr = null;
+
+        if (page != null && size > 0 && sort == null) {
+            pr = PageRequest.of(page, size, Sort.by("title").ascending());
+        } else if (page != null && size > 0 && sort != null) {
+            if (sort.startsWith("-")) {
+                pr = PageRequest.of(page, size, Sort.by(sort.substring(1)).descending());
+            } else {
+                pr = PageRequest.of(page, size, Sort.by(sort).ascending());
+            }
+        } else {
+            pr = PageRequest.of(0, 15, Sort.by("title").ascending());
+        }
+        //Determine parameter set
+        if (isAvailable != null) {
+            return ResponseEntity.ok(mrMovieRepository.findByTitleContainingAndIsAvailable(title == null ? "" : title, isAvailable, pr));
+        } else {
+            return ResponseEntity.ok(mrMovieRepository.findByTitleContaining(title == null ? "" : title, pr));
         }
     }
 
@@ -98,21 +98,21 @@ public class MrMovieController {
         MrMovie saved = mrMovieRepository.save(form);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
-                        .fromContextPath(request)
-                        .path("/m1/movies/{id}")
-                        .buildAndExpand(saved.getMovieId())
-                        .toUri())
+                .fromContextPath(request)
+                .path("/m1/movies/{id}")
+                .buildAndExpand(saved.getMovieId())
+                .toUri())
                 .build();
     }
-    
+
     @GetMapping("/{id}")
-    public ResponseEntity getMovie(@PathVariable("id") Long movieId){
-        return ResponseEntity.ok(mrMovieRepository.findById(movieId).orElseThrow(()-> new ResourceNotFoundException("Movie", "MovieId", movieId)));
+    public ResponseEntity getMovie(@PathVariable("id") Long movieId) {
+        return ResponseEntity.ok(mrMovieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie", "MovieId", movieId)));
     }
-    
+
     @PutMapping("/{id}")
-    public ResponseEntity updateMovie(@PathVariable("id")Long movieId,@Valid @RequestBody MrMovie form){
-        MrMovie existing = mrMovieRepository.findById(movieId).orElseThrow(()-> new ResourceNotFoundException("Movie", "MovieId", movieId));
+    public ResponseEntity updateMovie(@PathVariable("id") Long movieId, @Valid @RequestBody MrMovie form) {
+        MrMovie existing = mrMovieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie", "MovieId", movieId));
         existing.setTitle(form.getTitle());
         existing.setDescription(form.getDescription());
         existing.setImageUrl(form.getImageUrl());
@@ -120,14 +120,14 @@ public class MrMovieController {
         existing.setRentalPrice(form.getRentalPrice());
         existing.setStock(form.getStock());
         existing.setIsAvailable(form.getIsAvailable());
-        
+
         mrMovieRepository.save(existing);
         return ResponseEntity.noContent().build();
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteMovie(@PathVariable("id")Long movieId){
-        MrMovie existing = mrMovieRepository.findById(movieId).orElseThrow(()-> new ResourceNotFoundException("Movie", "MovieId", movieId));
+    public ResponseEntity deleteMovie(@PathVariable("id") Long movieId) {
+        MrMovie existing = mrMovieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie", "MovieId", movieId));
         mrMovieRepository.delete(existing);
         return ResponseEntity.noContent().build();
     }
