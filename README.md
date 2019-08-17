@@ -2,11 +2,11 @@
 test for applaudo studios
 
 ## version: 0.5 
--0.1 Initialization of project
--0.2 Security Implemented
--0.3 Filtering, sorting and paging
--0.4 Like system
--0.5 Rent and Buy
+- 0.1 Initialization of project
+- 0.2 Security Implemented
+- 0.3 Filtering, sorting and paging
+- 0.4 Like system
+- 0.5 Rent and Buy
 
 
 ## Install
