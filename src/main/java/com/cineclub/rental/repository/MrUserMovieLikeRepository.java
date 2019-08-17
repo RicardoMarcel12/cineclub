@@ -6,17 +6,21 @@
 package com.cineclub.rental.repository;
 
 import com.cineclub.rental.model.AppUser;
+import com.cineclub.rental.model.MrMovie;
+import com.cineclub.rental.model.MrUserMovieLike;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author keiichi
+ * @author keiic
  */
 @Repository
-public interface AppUserRepository extends JpaRepository<AppUser, Long>{
+public interface MrUserMovieLikeRepository extends JpaRepository<MrUserMovieLike, Long> {
     
-    Optional<AppUser> findByUsername(@Param("username")String username);
+    Integer countByMovieId(MrMovie movieId);
+    
+    Optional<MrUserMovieLike> findByMovieIdAndUserId(MrMovie movieId, AppUser userId);
 }
