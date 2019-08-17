@@ -1,8 +1,12 @@
 # cineclub
 test for applaudo studios
 
-## version: 0.2 
-Security Implemented
+## version: 0.4 
+-0.1 Initialization of project
+-0.2 Security Implemented
+-0.3 Filtering, sorting and paging
+-0.4 Like system
+
 
 ## Install
 implemented with MySQL Database 8.0.17 (Community Version GPL) 
@@ -59,7 +63,8 @@ all posible sort fields are:
 - description
 - stock
 - rentalPrice
-- salePrice	
+- salePrice
+- likes	
 	
 ### GET ADMINISTRATOR MOVIE LIST	
 Get a list of all movies, admin role required
@@ -86,6 +91,7 @@ all posible sort fields are:
 - stock
 - rentalPrice
 - salePrice
+- likes
 			
 	
 ### INSERT MOVIE
@@ -119,4 +125,20 @@ all posible sort fields are:
 | PROP      |     VALUE        |
 |-----------	|------------------|
 |URL:       | /m1/movies/{id}  |
-|METHOD:	    | DELETE           |	
+|METHOD:	    | DELETE           |
+
+### GET LIKES BY MOVIE
+	
+| PROP      |    VALUE          |
+|-----------	|-------------------|
+| URL:      | /m1/likes/{id}    |
+| METHOD:	| GET               |
+
+### LIKE/DISLIKE A MOVIE
+
+| PROP      |                    VALUE                |
+|-----------	|-----------------------------------------|
+| URL:	    | /m1/likes/                              |
+| METHOD:	| POST                                    |
+| HEADER:	| Content-Type:application/json           |
+| BODY:	    | {"movieId":"{id}","username":"{username}"}      |

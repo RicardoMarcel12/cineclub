@@ -9,10 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -20,11 +17,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -41,50 +40,36 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Getter
 @Setter
-@Table(name = "MR_MOVIE")
+@Table(name = "MR_USER_MOVIE_LIKE")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt","updatedAt"}, allowGetters = true)    
-public class MrMovie implements Serializable {
+@JsonIgnoreProperties(value = {"createdAt","updatedAt"}, allowGetters = true)
+public class MrUserMovieLike implements Serializable{
     
     @Id
-    @Column(name = "MOVIE_ID", nullable = false)
+    @Column(name = "LIKE_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView
-    private Long movieId;
-    
-     //title, description, at least one image, stock, rental price, sale price and availability.
-    
-    @NotBlank
-    @JsonView
-    private String title;
-    
-    @NotBlank
-    @JsonView
-    private String description;
-      
-    @NotBlank
-    @JsonView
-    private String imageUrl;  
-    
-    @JsonView
-    private Long likes;
-    
-    @JsonView
-    Integer stock;
-    
-    @JsonView
-    BigDecimal rentalPrice;
+    private Long likeId;
     
     
-    @JsonView
-    BigDecimal salePrice;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter(onMethod = @__(@JsonIgnore))
+    @JoinColumns({
+        @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
+    AppUser userId;
     
     
-    @JsonView
-    Boolean isAvailable;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Getter(onMethod = @__(@JsonIgnore))
+    @JoinColumns({
+        @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")})
+    MrMovie movieId;
+    
+    @NotNull
+    Boolean isLiked;
     
     @Column(nullable=false, updatable=false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -96,6 +81,33 @@ public class MrMovie implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
     
- 
+    public Long getMrMovieIdDelegate(){
+        if(this.movieId!= null){
+            return this.movieId.getMovieId();
+        }else{
+            return null;
+        }
+    }
+    public String getMrMovieTitleDelegate(){
+        if(this.movieId!= null){
+            return this.movieId.getTitle();
+        }else{
+            return null;
+        }
+    }
     
+    public Long getAppUserIdDelegate(){
+        if(this.userId!= null){
+            return this.userId.getUserId();
+        }else{
+            return null;
+        }
+    }
+    public String getAppUserUsernameDelegate(){
+        if(this.userId!= null){
+            return this.userId.getUsername();
+        }else{
+            return null;
+        }
+    }
 }
