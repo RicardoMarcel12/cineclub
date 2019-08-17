@@ -8,11 +8,10 @@ test for applaudo studios
 - 0.4 Like system
 - 0.5 Rent and Buy
 
-
 ## Install
 implemented with MySQL Database 8.0.17 (Community Version GPL) 
 create a schema and a user and register the credentials to file `\src\main\resources\application.properties`
-,jpa will generate the model
+jpa will generate the model
 
 ### application.properties example:
 ```
