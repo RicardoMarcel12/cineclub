@@ -84,6 +84,32 @@ the token will be valid for 30 minutes
 | HEADER:   | Content-Type:application/json           |
 | BODY:	    | {"newPassword":"{password}","confirmPassword":"{password}","token":"{generatedToken}"} |
 
+### GET USER ROLES 
+get a string list of the user's roles
+
+| PROP      | VALUE                |
+|-----------	|----------------------|
+| URL:      | /api/roles/{admin}   |
+| METHOD:   | GET                  |
+
+### SET NEW ROLE TO USER
+
+| PROP      |                    VALUE                   |
+|-----------	|--------------------------------------------|  
+| URL:      | /api/roles/{admin}                         |
+| METHOD:   | PUT                                        |
+| HEADER:   | Content-Type:application/json              |
+| BODY:	    | {"role":"ROLE_ADMIN"}/{"role":"ROLE_USER"} |
+
+### DELETE ROLE OF USER
+
+| PROP      |                    VALUE                   |
+|-----------	|--------------------------------------------|  
+| URL:      | /api/roles/{admin}                         |
+| METHOD:   | DELETE                                     |
+| HEADER:   | Content-Type:application/json              |
+| BODY:	    | {"role":"ROLE_ADMIN"}/{"role":"ROLE_USER"} |
+
 
 ## Movie Management:
 
