@@ -150,13 +150,13 @@ Get a list of all movies, admin role required
 #### FILTERS, SORT AND PAGE PARAMS
 parameters are optional
 
-| PARAMETER  | VALUE EXAMPLE   |           DESCRIPTION			                  |
-|------------|-----------------|---------------------------------------------------|
-| title=     | 'matrix'	       | matches any part of the movie title               | 
-| isAvailable| true, false     | filters available/unavailable movies              |
-| page=  	 | 0               | page number starting with zero                    |
-| size=		 | 5               | number of elements on page         	               |
-| sort=      | movieId, -title | any field of the movie, dash for descending order |	
+| PARAMETER  | VALUE EXAMPLE         |           DESCRIPTION		                         |
+|------------|-----------------------|---------------------------------------------------|
+| title=     | 'matrix'	             | matches any part of the movie title               | 
+| isAvailable| true, false           | filters available/unavailable movies              |
+| page=  	 | 0                     | page number starting with zero                    |
+| size=		 | 5               		 | number of elements on page      	                 |
+| sort=      | "movieId" or "-title" | any field of the movie, dash for descending order |	
 
 all posible sort fields are:
 - title
