@@ -1,7 +1,7 @@
 # cineclub
 test for applaudo studios
 
-## version: 1.2 
+## version: 1.3 
 - 0.1 Initialization of project
 - 0.2 Security Implemented
 - 0.3 Filtering, sorting and paging
@@ -10,6 +10,7 @@ test for applaudo studios
 - 1.0 First Release on Heroku
 - 1.1 Register/forgot-password Implemented
 - 1.2 Mail implemented
+- 1.3 User Roles Administration
  
 ## Install
 ### DATABASE
