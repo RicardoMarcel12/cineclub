@@ -1,4 +1,4 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,13 +7,11 @@ package com.cineclub.rental.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -22,11 +20,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,55 +49,43 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Table(name = "APP_USER")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"CreatedAt","UpdatedAt"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"CreatedAt", "UpdatedAt"}, allowGetters = true)
 public class AppUser implements UserDetails {
-    
+
     @Id
-     @Column(name = "USER_ID", nullable = false)
+    @Column(name = "USER_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView
     private Long userId;
-    
-    @NotBlank
+
     @JsonView
     private String username;
-    
-    @NotBlank
+
     @JsonView
     private String password;
-    
-    @NotBlank
+
     @JsonView
     private String firstName;
-    
+
     @JsonView
-    private String secondName;
-    
-    @NotBlank
-    @JsonView
-    private String firstSurname;
-    
-    @JsonView
-    private String secondSurname;
-    
-    @NotBlank
+    private String lastName;
+
     @JsonView
     private String email;
-    
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
-    
-    @Column(nullable=false, updatable=false)
+
+    @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
-    
+
     @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -110,22 +94,22 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-         return true;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-         return true;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-         return true;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-         return true;
+        return true;
     }
-    
+
 }

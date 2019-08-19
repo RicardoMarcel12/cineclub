@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
     
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         
@@ -49,11 +50,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers("/auth/login").permitAll()
-                    .antMatchers(HttpMethod.GET, "/m1/movies/admin").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.GET, "/m1/movies/admin/**").hasRole("ADMIN")
-                    .antMatchers(HttpMethod.GET, "/m1/movies/*").permitAll()
-                    .antMatchers(HttpMethod.GET, "/m1/movies").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/forgot-password", "/api/reset-password","/api/register").permitAll()
                     .antMatchers(HttpMethod.GET, "/m1/likes/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/m1/movies/admin","/m1/movies/admin/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/m1/movies/*","/m1/movies").permitAll()
+                    .antMatchers(HttpMethod.POST, "/m1/movies/**").hasRole("ADMIN")
                     .antMatchers(HttpMethod.DELETE, "/m1/movies/**").hasRole("ADMIN")
                     .antMatchers(HttpMethod.PUT,"/m1/movies/**").hasRole("ADMIN")
                     .anyRequest().authenticated()

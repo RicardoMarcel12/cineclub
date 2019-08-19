@@ -14,7 +14,6 @@ import com.cineclub.rental.repository.AppUserRepository;
 import com.cineclub.rental.repository.MrMovieRepository;
 import com.cineclub.rental.repository.MrRentBuyMovieRepository;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -30,7 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -142,7 +140,7 @@ public class MrRentBuyMovieController {
 
             mrRentBuyMovieRepository.save(buy);
             response.put("movieId", existing.getMovieId());
-            response.put("CopiesQty", buy.getCopiesQty());
+            response.put("copiesQty", buy.getCopiesQty());
             response.put("amountToPay", buy.getOperationAmount());
         } else {
             response.put("errorMsg", "Not enough movies on stock");
