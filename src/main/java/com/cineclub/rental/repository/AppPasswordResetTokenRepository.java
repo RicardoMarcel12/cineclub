@@ -5,22 +5,16 @@
  */
 package com.cineclub.rental.repository;
 
-import com.cineclub.rental.model.AppUser;
+import com.cineclub.rental.model.AppPasswordResetToken;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author keiichi
+ * @author keiic
  */
 @Repository
-public interface AppUserRepository extends JpaRepository<AppUser, Long>{
-    
-    Optional<AppUser> findByUsername(@Param("username")String username);
-    
-    Optional<AppUser> findByEmail(@Param("email")String email);
-    
-    
+public interface AppPasswordResetTokenRepository extends JpaRepository<AppPasswordResetToken, Long> {
+    Optional<AppPasswordResetToken> findByToken(String token);
 }

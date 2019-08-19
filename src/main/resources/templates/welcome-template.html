@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:remove="all">Sending Email</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+        <!-- use the font -->
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+                font-size: 48px;
+            }
+        </style>
+    </head>
+    <body>
+        <p>
+            <img src="https://i0.wp.com/www.rtodos-santos.mx/wp-content/uploads/2014/05/CINE-CLUB.jpg" />
+        </p>
+        <h1>Welcome! <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1> 
+
+
+        <p>
+            You have been successfully registered at the <b>Cineclub</b> Rental System on
+            <span th:text="${#dates.format(user.createdAt)}"></span>
+        </p>
+
+        <p>Regards, <br />
+            <em>The Cineclub Team</em>
+        </p>
+    </body>
+</html>

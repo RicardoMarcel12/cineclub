@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,58 +40,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Getter
 @Setter
-@Table(name = "MR_RENT_BUY_MOVIE")
+@Table(name = "APP_PASSWORD_RESET_TOKEN")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
-public class MrRentBuyMovie implements Serializable {
+
+public class AppPasswordResetToken implements Serializable {
 
     @Id
-    @Column(name = "RENT_BUY_ID", nullable = false)
+    @Column(name = "TOKEN_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView
-    private Long rentBuyId;
+    private Long tokenId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Getter(onMethod = @__(
-            @JsonIgnore))
-    @JoinColumns({
-        @JoinColumn(name = "movie_id", referencedColumnName = "movie_id")})
-    MrMovie movieId;
+    private String token;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @Getter(onMethod = @__(
             @JsonIgnore))
     @JoinColumns({
         @JoinColumn(name = "user_id", referencedColumnName = "user_id")})
     AppUser userId;
 
-    /*true->rent - false->buy*/
-    Boolean isRentBuy;
-
-    /*one by default*/
-    Integer days;
-
-    /*days after rent*/
     @Temporal(TemporalType.TIMESTAMP)
-    Date returnDate;
-
-    /*date of actual return*/
-    @Temporal(TemporalType.TIMESTAMP)
-    Date returnedOn;
-
-    /*one by default*/
-    @JsonView
-    Integer copiesQty;
-
-    @JsonView
-    BigDecimal operationAmount;
-
-    /*true->active - false->inactive
-     purchases are inactive by default */
-    Boolean isActive;
+    private Date expiryDate;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -103,20 +77,14 @@ public class MrRentBuyMovie implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    public Long getMrMovieIdDelegate() {
-        if (this.movieId != null) {
-            return this.movieId.getMovieId();
-        } else {
-            return null;
-        }
+    public void setExpiryDate(Integer minutes) {
+        Calendar now = Calendar.getInstance();
+        now.add(Calendar.MINUTE, minutes);
+        this.expiryDate = now.getTime();
     }
 
-    public String getMrMovieTitleDelegate() {
-        if (this.movieId != null) {
-            return this.movieId.getTitle();
-        } else {
-            return null;
-        }
+    public Boolean isExpired() {
+        return new Date().after(this.expiryDate);
     }
 
     public Long getAppUserIdDelegate() {
