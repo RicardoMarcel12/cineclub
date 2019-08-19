@@ -10,7 +10,7 @@ test for applaudo studios
 - 1.0 First Release on Heroku
 - 1.1 Register/forgot-password Implemented
 - 1.2 Mail implemented
-
+ 
 ## Install
 ### DATABASE
 implemented with MySQL Database 8.0.17 (Community Version GPL) 
@@ -147,7 +147,7 @@ all posible sort fields are:
 | URL:	    | /m1/movies                              |
 | METHOD:   | POST                                    |
 | HEADER:   | Content-Type:application/json           |
-| BODY:	    | `{"movieId": 0,"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true	}` |
+| BODY:	    | `{"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true}` |
 		
 
 ### VIEW MOVIE
@@ -164,7 +164,16 @@ all posible sort fields are:
 | URL:	    | /m1/movies/{id}                         |
 | METHOD:	| PUT                                     |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | `{"movieId": 0,"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true	}` |
+| BODY:	    | `{"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,}` |
+
+
+### UPDATE MOVIE AVAILABILITY
+
+| PROP      |                    VALUE                |
+|-----------	|-----------------------------------------|
+| URL:	    | /m1/movies/available/{id}               |
+| METHOD:	| PUT                                     |
+| PARAMETER:| available=true / available=false        |
 
 ### DELETE MOVIE
 
@@ -199,6 +208,9 @@ all posible sort fields are:
 | METHOD:	| POST                                    |
 | HEADER:	| Content-Type:application/json           |
 | BODY:	    | {"movieId":"{id}","username":"{username}",	"days":3,"copiesQty":1}|
+
+the price of the movie rent will be 
+the rentalPrice by number of days
 
 ### GET LIST OF ACTIVE RENTS
 
