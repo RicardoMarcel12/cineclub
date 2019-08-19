@@ -1,7 +1,7 @@
 # cineclub
 test for applaudo studios
 
-## version: 1.2 
+## version: 1.3 
 - 0.1 Initialization of project
 - 0.2 Security Implemented
 - 0.3 Filtering, sorting and paging
@@ -10,6 +10,7 @@ test for applaudo studios
 - 1.0 First Release on Heroku
 - 1.1 Register/forgot-password Implemented
 - 1.2 Mail implemented
+- 1.3 User Roles Administration
  
 ## Install
 ### DATABASE
@@ -83,11 +84,37 @@ the token will be valid for 30 minutes
 | HEADER:   | Content-Type:application/json           |
 | BODY:	    | {"newPassword":"{password}","confirmPassword":"{password}","token":"{generatedToken}"} |
 
+### GET USER ROLES 
+get a string list of the user's roles
+
+| PROP      | VALUE                |
+|-----------	|----------------------|
+| URL:      | /api/roles/{admin}   |
+| METHOD:   | GET                  |
+
+### SET NEW ROLE TO USER
+
+| PROP      |                    VALUE                   |
+|-----------	|--------------------------------------------|  
+| URL:      | /api/roles/{admin}                         |
+| METHOD:   | PUT                                        |
+| HEADER:   | Content-Type:application/json              |
+| BODY:	    | {"role":"ROLE_ADMIN"}/{"role":"ROLE_USER"} |
+
+### DELETE ROLE OF USER
+
+| PROP      |                    VALUE                   |
+|-----------	|--------------------------------------------|  
+| URL:      | /api/roles/{admin}                         |
+| METHOD:   | DELETE                                     |
+| HEADER:   | Content-Type:application/json              |
+| BODY:	    | {"role":"ROLE_ADMIN"}/{"role":"ROLE_USER"} |
+
 
 ## Movie Management:
 
 ### GET MOVIE LIST
-	Get a list of available movies, no authentication required
+Get a list of available movies, no authentication required
 
 | PROP      | VALUE        |
 |-----------	|--------------|
@@ -97,12 +124,12 @@ the token will be valid for 30 minutes
 #### FILTERS, SORT AND PAGE PARAMS
 all parameters are optional
 
-| PARAMETER | VALUE EXAMPLE   |           DESCRIPTION			                  |
-|-----------	|-----------------|---------------------------------------------------|
-| title=    | 'matrix'	      | matches any part of the movie title               | 
-| page=  	| 0               | page number starting with zero                    |
-| size=		| 5               | number of elements on page         	              |
-| sort=     | movieId, -title | any field of the movie, dash for descending order |	
+| PARAMETER | VALUE EXAMPLE         |           DESCRIPTION			                    |
+|-----------	|-----------------------|---------------------------------------------------|
+| title=    | 'matrix'	            | matches any part of the movie title               | 
+| page=  	| 0                     | page number starting with zero                    |
+| size=		| 5                     | number of elements on page                        |
+| sort=     | "movieId" or "-title" | any field of the movie, dash for descending order |	
 
 all posible sort fields are:
 - title
@@ -121,15 +148,15 @@ Get a list of all movies, admin role required
 | METHOD:   | GET                |
 
 #### FILTERS, SORT AND PAGE PARAMS
-all parameters are optional
+parameters are optional
 
-| PARAMETER  | VALUE EXAMPLE   |           DESCRIPTION			                  |
-|------------|-----------------|---------------------------------------------------|
-| title=     | 'matrix'	       | matches any part of the movie title               | 
-| isAvailable| true, false     | filters available/unavailable movies              |
-| page=  	 | 0               | page number starting with zero                    |
-| size=		 | 5               | number of elements on page         	               |
-| sort=      | movieId, -title | any field of the movie, dash for descending order |	
+| PARAMETER  | VALUE EXAMPLE         |           DESCRIPTION		                         |
+|------------|-----------------------|---------------------------------------------------|
+| title=     | 'matrix'	             | matches any part of the movie title               | 
+| isAvailable| true, false           | filters available/unavailable movies              |
+| page=  	 | 0                     | page number starting with zero                    |
+| size=		 | 5               		 | number of elements on page      	                 |
+| sort=      | "movieId" or "-title" | any field of the movie, dash for descending order |	
 
 all posible sort fields are:
 - title
