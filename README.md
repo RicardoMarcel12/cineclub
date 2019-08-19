@@ -114,7 +114,7 @@ get a string list of the user's roles
 ## Movie Management:
 
 ### GET MOVIE LIST
-	Get a list of available movies, no authentication required
+Get a list of available movies, no authentication required
 
 | PROP      | VALUE        |
 |-----------	|--------------|
