@@ -124,12 +124,12 @@ Get a list of available movies, no authentication required
 #### FILTERS, SORT AND PAGE PARAMS
 all parameters are optional
 
-| PARAMETER | VALUE EXAMPLE   |           DESCRIPTION			                  |
-|-----------	|-----------------|---------------------------------------------------|
-| title=    | 'matrix'	      | matches any part of the movie title               | 
-| page=  	| 0               | page number starting with zero                    |
-| size=		| 5               | number of elements on page         	              |
-| sort=     | movieId, -title | any field of the movie, dash for descending order |	
+| PARAMETER | VALUE EXAMPLE         |           DESCRIPTION			                    |
+|-----------	|-----------------------|---------------------------------------------------|
+| title=    | 'matrix'	            | matches any part of the movie title               | 
+| page=  	| 0                     | page number starting with zero                    |
+| size=		| 5                     | number of elements on page                        |
+| sort=     | "movieId" or "-title" | any field of the movie, dash for descending order |	
 
 all posible sort fields are:
 - title
@@ -148,7 +148,7 @@ Get a list of all movies, admin role required
 | METHOD:   | GET                |
 
 #### FILTERS, SORT AND PAGE PARAMS
-all parameters are optional
+parameters are optional
 
 | PARAMETER  | VALUE EXAMPLE   |           DESCRIPTION			                  |
 |------------|-----------------|---------------------------------------------------|
