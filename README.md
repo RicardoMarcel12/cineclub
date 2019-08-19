@@ -12,16 +12,28 @@ test for applaudo studios
 - 1.2 Mail implemented
 
 ## Install
+### DATABASE
 implemented with MySQL Database 8.0.17 (Community Version GPL) 
-create a schema and a user and register the credentials to file `\src\main\resources\application.properties`
+create a schema and a user and register the credentials to file ` \src\main\resources\application.properties `
 jpa will generate the model
 
-### application.properties example:
+#### application.properties example:
 ```
 spring.datasource.url = {jdbc:mysql:connectURL}
 spring.datasource.username = {DB_USERNAME}
 spring.datasource.password = {DB_PASSWORD}
 
+```
+### MAIL
+setup your email provider on the ` \src\main\resources\application.properties ` file
+
+```
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=user@gmail.com
+spring.mail.password=secret-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 ## Run 
 for running use the command `mvn spring-boot:run` 
