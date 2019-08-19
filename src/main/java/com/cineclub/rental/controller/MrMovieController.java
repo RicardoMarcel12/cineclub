@@ -119,11 +119,19 @@ public class MrMovieController {
         existing.setSalePrice(form.getSalePrice());
         existing.setRentalPrice(form.getRentalPrice());
         existing.setStock(form.getStock());
-        existing.setIsAvailable(form.getIsAvailable());
 
         mrMovieRepository.save(existing);
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/available/{id}")
+    public ResponseEntity updateMovieAvaliability(@PathVariable("id") Long movieId, @RequestParam("available")Boolean available) {
+        MrMovie existing = mrMovieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("Movie", "MovieId", movieId));
+        existing.setIsAvailable(available);
+
+        mrMovieRepository.save(existing);
+        return ResponseEntity.noContent().build();
+    }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteMovie(@PathVariable("id") Long movieId) {
