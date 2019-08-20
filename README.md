@@ -1,4 +1,4 @@
-# cineclub
+# CineClub
 test for applaudo studios
 
 ## version: 1.3 
@@ -16,7 +16,6 @@ test for applaudo studios
 ### DATABASE
 implemented with MySQL Database 8.0.17 (Community Version GPL) 
 create a schema and a user and register the credentials to file ` \src\main\resources\application.properties `
-jpa will generate the model
 
 #### application.properties example:
 ```
@@ -31,13 +30,13 @@ setup your email provider on the ` \src\main\resources\application.properties ` 
 ```
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
-spring.mail.username=user@gmail.com
-spring.mail.password=secret-password
+spring.mail.username=**user@gmail.com**
+spring.mail.password=**secret-password**
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 ## Run 
-for running use the command `mvn spring-boot:run` 
+to run the api locally, use the command `mvn spring-boot:run` on the project folder 
 
 ## Movie Rental Security: 
 API security implemented with JWT with an expiration time of 1 hour
@@ -60,61 +59,76 @@ use the Generated token with Authentication type **"Bearer Token"**
 | URL:      | /api/register                             |
 | METHOD:   | POST                                    |
 | HEADER:   | Content-Type:application/json           |
-| BODY:	    | {"username":"{username}","password":"{password}","firstName":"{firstname}","lastName":"{lastname}","email":"{emailaddress}"} |
+| BODY:	    | {"username":"{username}", "password":"{password}", "firstName":"{firstname}", "lastName":"{lastname}", "email":"{emailaddress}"} |
 
-### FORGOT PASSWORD
+### FORGOT PASSWORD (STEP 1)
 
 | PROP      |                    VALUE                |
 |-----------	|-----------------------------------------|  
-| URL:      | /api/forgot-password                             |
+| URL:      | /api/forgot-password                    |
 | METHOD:   | POST                                    |
 | HEADER:   | Content-Type:application/json           |
-| BODY:	    | {"email":"{emailaddress},"url":{frontend form handler}} |
+| BODY:	    | {"email":"{emailaddress}, "url":{frontend form handler}} |
 
-a token will be appended to the URL 
-example URL: "http://www.cineclub-kansas.com/recover?token="
-the token will be valid for 30 minutes
+- {frontend from handler } => a token will be appended to the URL example URL: ` "http://www.cineclub-kansas.com/recover?token=" ` the token will be valid for 30 minutes
 
-### RESET PASSWORD
+### PASSWORD RESET (STEP 2)
 
 | PROP      |                    VALUE                |
 |-----------	|-----------------------------------------|  
 | URL:      | /api/reset-password                     |
 | METHOD:   | POST                                    |
 | HEADER:   | Content-Type:application/json           |
-| BODY:	    | {"newPassword":"{password}","confirmPassword":"{password}","token":"{generatedToken}"} |
+| BODY:	    | {"newPassword":"{password}", "confirmPassword":"{password}", "token":"{generatedToken}"} |
+
+- {generatedToken} => from the previous step
 
 ### GET USER ROLES 
+Admin role is needed for this operation
 get a string list of the user's roles
 
-| PROP      | VALUE                |
-|-----------	|----------------------|
-| URL:      | /api/roles/{admin}   |
-| METHOD:   | GET                  |
+| PROP      | VALUE                   |
+|-----------	|-------------------------|
+| URL:      | /api/roles/{username}   |
+| METHOD:   | GET                     |
 
-### SET NEW ROLE TO USER
+
+### SET NEW USER ROLE
+Admin role is needed for this operation
 
 | PROP      |                    VALUE                   |
 |-----------	|--------------------------------------------|  
-| URL:      | /api/roles/{admin}                         |
+| URL:      | /api/roles/{username}                      |
 | METHOD:   | PUT                                        |
 | HEADER:   | Content-Type:application/json              |
-| BODY:	    | {"role":"ROLE_ADMIN"}/{"role":"ROLE_USER"} |
+| BODY:	    | {"role":"{new role}"}  					 |
 
-### DELETE ROLE OF USER
+this method will return the final role list for the user
+possible role values: 
+- ROLE_ADMIN
+- ROLE_USER	
+
+
+### DELETE USER ROLE
+Admin role is needed for this operation
 
 | PROP      |                    VALUE                   |
 |-----------	|--------------------------------------------|  
-| URL:      | /api/roles/{admin}                         |
+| URL:      | /api/roles/{username}                      |
 | METHOD:   | DELETE                                     |
 | HEADER:   | Content-Type:application/json              |
-| BODY:	    | {"role":"ROLE_ADMIN"}/{"role":"ROLE_USER"} |
+| BODY:	    | {"role":"{new role}"}                      |
+
+this method will return the final role list for the user
+possible role values: 
+- ROLE_ADMIN
+- ROLE_USER	
 
 
 ## Movie Management:
 
 ### GET MOVIE LIST
-Get a list of available movies, no authentication required
+get a list of available movies, no authentication required
 
 | PROP      | VALUE        |
 |-----------	|--------------|
@@ -122,7 +136,7 @@ Get a list of available movies, no authentication required
 | METHOD:   | GET          |
 
 #### FILTERS, SORT AND PAGE PARAMS
-all parameters are optional
+parameters are optional
 
 | PARAMETER | VALUE EXAMPLE         |           DESCRIPTION			                    |
 |-----------	|-----------------------|---------------------------------------------------|
@@ -140,7 +154,7 @@ all posible sort fields are:
 - likes	
 	
 ### GET ADMINISTRATOR MOVIE LIST	
-Get a list of all movies, admin role required
+get a list of all movies, admin role required
 
 | PROP      | VALUE              |
 |-----------	|--------------------|
@@ -174,7 +188,7 @@ all posible sort fields are:
 | URL:	    | /m1/movies                              |
 | METHOD:   | POST                                    |
 | HEADER:   | Content-Type:application/json           |
-| BODY:	    | `{"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,"isAvailable": true}` |
+| BODY:	    | `{"title": "Movie Title", "description": "brief Description", "imageUrl": "https://server/image.ext", "stock": 1, "rentalPrice": 0.99, "salePrice": 1.99, "isAvailable": true}` |
 		
 
 ### VIEW MOVIE
@@ -184,6 +198,8 @@ all posible sort fields are:
 | URL:      | /m1/movies/{id}   |
 | METHOD:	| GET               |
 	
+- {id}=> movieId
+	
 ### UPDATE MOVIE
 
 | PROP      |                    VALUE                |
@@ -191,8 +207,9 @@ all posible sort fields are:
 | URL:	    | /m1/movies/{id}                         |
 | METHOD:	| PUT                                     |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | `{"title": "Movie Title","description": "brief Description","imageUrl": "https://server/image.ext","stock": 1,"rentalPrice": 0.99,"salePrice": 1.99,}` |
+| BODY:	    | `{"title": "Movie Title", "description": "brief Description", "imageUrl": "https://server/image.ext", "stock": 1, "rentalPrice": 0.99, "salePrice": 1.99}` |
 
+- {id}=> movieId
 
 ### UPDATE MOVIE AVAILABILITY
 
@@ -200,7 +217,12 @@ all posible sort fields are:
 |-----------	|-----------------------------------------|
 | URL:	    | /m1/movies/available/{id}               |
 | METHOD:	| PUT                                     |
-| PARAMETER:| available=true / available=false        |
+| PARAMETER:| {"available"={boolean}}                 |
+
+
+- {id}=> movieId
+- {boolean} => true or false
+
 
 ### DELETE MOVIE
 
@@ -223,7 +245,7 @@ all posible sort fields are:
 | URL:	    | /m1/likes/                              |
 | METHOD:	| POST                                    |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | {"movieId":"{id}","username":"{username}"}      |
+| BODY:	    | {"movieId":"{id}", "username":"{username}"}      |
 
 ## Rental and Buying:
 
@@ -234,10 +256,10 @@ all posible sort fields are:
 | URL:	    | /r1/rent/                              |
 | METHOD:	| POST                                    |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | {"movieId":"{id}","username":"{username}",	"days":3,"copiesQty":1}|
+| BODY:	    | {"movieId":"{id}", "username":"{username}", "days":3,"copiesQty":1}|
+ 
+- the rental Total will be the rentalPrice by number of days 
 
-the price of the movie rent will be 
-the rentalPrice by number of days
 
 ### GET LIST OF ACTIVE RENTS
 
@@ -253,53 +275,51 @@ the rentalPrice by number of days
 | URL:	    | /r2/rent/                              |
 | METHOD:	| PUT                                    |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | {"movieId":"{id}","username":"{username}"}|
+| BODY:	    | {"movieId":"{id}", "username":"{username}"}|
 
 it returns the 
 - overtimeDays
 - amountToPay
 
-### CONFIRM PAYMENT AND MOVIE RETURN
-
+### CONFIRM PAYMENT AND RETURN MOVIE 
+ 
 | PROP      |                    VALUE                |
 |-----------	|-----------------------------------------|
 | URL:	    | /r3/rent/                              |
 | METHOD:	| PUT                                    |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | {"movieId":"{id}","username":"{username}"}|
+| BODY:	    | {"movieId":"{id}", "username":"{username}"}|
 
 
-### REQUEST MOVIE BUY
+### REQUEST MOVIE PURCHASE
 
 | PROP      |                    VALUE                |
 |-----------	|-----------------------------------------|
 | URL:	    | /b1/buy/                              |
 | METHOD:	| POST                                    |
 | HEADER:	| Content-Type:application/json           |
-| BODY:	    | {"movieId":"{id}","username":"{username}","copiesQty":1}|
+| BODY:	    | {"movieId":"{id}", "username":"{username}", "copiesQty":1}|
 
 it returns the:
 - movieId for displaying info
 - copiesQty for confirmation
 - amountToPay 
 
-### CONFIRM MOVIE BUY
+### CONFIRM MOVIE PURCHASE
 
 | PROP      |                    VALUE                  |
 |-----------	|-------------------------------------------|
 | URL:	    | /b2/buy/                                  |
 | METHOD:	| PUT                                       |
 | HEADER:	| Content-Type:application/json             |
-| BODY:	    | {"movieId":"{id}","username":"{username}" |
+| BODY:	    | {"movieId":"{id}", "username":"{username}" |
 
 
-
- 
-### GET HISTORY OF PURCHASES 
+### GET MOVIE PURCHASE HISTORY BY USERNAME 
 
 | PROP      |    VALUE             |
 |-----------	|----------------------|
-| URL:      | /b1/buy/{username}  |
+| URL:      | /b1/buy/{username}   |
 | METHOD:	| GET                  |
 
 
